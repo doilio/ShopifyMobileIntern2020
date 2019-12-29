@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Shopify Memory</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rules_title">The Rules for playing Memory</string>
+    <string name="rules_text">Step 1.\nMix up the cards.  \n\nStep 2.\nLay them in rows, face down.   \n\nStep 3.\nTurn over any two cards.   \n\nStep 4.\nIf the two cards match, keep them.   \n\nStep 5.\nIf they don\'t match, turn them back over.   \n\nStep 6.\nRemember what was on each card and where it was.   \n\nStep 7.\nWatch and remember during the other player\'s turn.   \n\nStep 8.\nThe game is over when all the cards have been matched.   \n\nStep 9.\nThe player with the most matches wins.   \n\nStep 10.\nHave fun</string>
+    <string name="share_score">Share Score</string>
+    <string name="menu_rules">Rules</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_about">About</string>
 </resources>
