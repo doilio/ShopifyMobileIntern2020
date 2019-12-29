@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.doilio.shopifymemory.fragments.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="ShopiMemory"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
@@ -17,18 +17,18 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.doilio.shopifymemory.fragments.AboutFragment"
-        android:label="fragment_about"
+        android:label="About"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/rulesFragment"
         android:name="com.doilio.shopifymemory.fragments.RulesFragment"
-        android:label="fragment_rules"
+        android:label="Rules"
         tools:layout="@layout/fragment_rules" />
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.doilio.shopifymemory.fragments.GameFragment"
-        android:label="fragment_game"
-        tools:layout="@layout/fragment_game" >
+        android:label="Memory Game"
+        tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/action_gameFragment_to_winnerFragment"
             app:destination="@id/winnerFragment" />
@@ -36,6 +36,12 @@
     <fragment
         android:id="@+id/winnerFragment"
         android:name="com.doilio.shopifymemory.fragments.WinnerFragment"
-        android:label="fragment_winner"
-        tools:layout="@layout/fragment_winner" />
+        android:label="Winner"
+        tools:layout="@layout/fragment_winner" >
+        <action
+            android:id="@+id/action_winnerFragment_to_gameFragment"
+            app:destination="@id/gameFragment"
+            app:popUpTo="@+id/gameFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
