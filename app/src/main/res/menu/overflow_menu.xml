@@ -4,6 +4,7 @@
 
     <item
         android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Settings"
-        app:showAsAction="never" />
+        android:title="@string/settings"
+        app:showAsAction="never"
+        android:id="@+id/settingsFragment"/>
 </menu>

@@ -2,6 +2,8 @@ package com.doilio.shopifymemory
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -27,13 +29,21 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, drawerLayout)
         setupWithNavController(binding.navView, navController)
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { controller, destination, _ ->
             if (destination.id == controller.graph.startDestination) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            }else{
+            } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.shareApp -> Toast.makeText(this, "Partilhar a app", Toast.LENGTH_SHORT).show()
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {

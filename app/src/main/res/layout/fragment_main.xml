@@ -18,17 +18,18 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:src="@drawable/shopify_logo"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/button_play"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/app_icon" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/button_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Play Game"
+            android:text="@string/play_game"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
