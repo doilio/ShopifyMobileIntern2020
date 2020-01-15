@@ -5,9 +5,34 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.doilio.shopifymemory.fragments.game.GameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/response_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.response}" />
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragments.GameFragment">
@@ -296,7 +321,7 @@
             app:layout_constraintStart_toStartOf="@+id/player1_text"
             app:layout_constraintTop_toBottomOf="@+id/player1_text" />
 
-<!--        <TextView
+&lt;!&ndash;        <TextView
             android:id="@+id/player2_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -315,8 +340,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/player2_text"
             app:layout_constraintStart_toStartOf="@+id/player2_text"
-            app:layout_constraintTop_toBottomOf="@+id/player2_text" />-->
+            app:layout_constraintTop_toBottomOf="@+id/player2_text" />&ndash;&gt;
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
 </layout>

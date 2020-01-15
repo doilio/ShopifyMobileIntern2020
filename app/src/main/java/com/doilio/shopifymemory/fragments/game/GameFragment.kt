@@ -1,4 +1,4 @@
-package com.doilio.shopifymemory.fragments
+package com.doilio.shopifymemory.fragments.game
 
 
 import android.os.Bundle
@@ -7,13 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 
 import com.doilio.shopifymemory.R
-import com.doilio.shopifymemory.R.drawable.*
 import com.doilio.shopifymemory.databinding.FragmentGameBinding
 
 /**
@@ -22,6 +20,9 @@ import com.doilio.shopifymemory.databinding.FragmentGameBinding
 class GameFragment : Fragment() {
 
     private lateinit var binding: FragmentGameBinding
+    private lateinit var viewModel: GameViewModel
+    private lateinit var viewModelFactory: GameViewModelFactory
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +30,14 @@ class GameFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
 
-        val imageList = mutableListOf(
+        binding.lifecycleOwner = this
+
+        viewModelFactory = GameViewModelFactory()
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
+        binding.viewModel = viewModel
+
+
+        /*val imageList = mutableListOf(
             front1,
             front2,
             front3,
@@ -125,7 +133,7 @@ class GameFragment : Fragment() {
             }
 
         }
-
+*/
 
         return binding.root
     }

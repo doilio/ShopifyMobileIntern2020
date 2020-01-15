@@ -43,4 +43,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+
+    // Gson Converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+
+    implementation "com.squareup.retrofit2:converter-scalars:2.6.2"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
 }
