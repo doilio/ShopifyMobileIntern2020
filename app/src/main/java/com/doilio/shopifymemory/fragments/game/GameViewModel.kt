@@ -16,6 +16,10 @@ class GameViewModel : ViewModel() {
     val response: LiveData<String>
         get() = _response
 
+    private var _products = MutableLiveData<List<Products>>()
+    val products: LiveData<List<Products>>
+        get() = _products
+
     init {
         getProducts()
     }
@@ -34,7 +38,8 @@ class GameViewModel : ViewModel() {
                 if (response.body() != null) {
                     val products: List<Products> = response.body()!!.products
 
-                    _response.value = "We have ${products.size} Products"
+                    _products.value = products
+                    //_response.value = "We have ${products.size} Products"
                 }
 
             }

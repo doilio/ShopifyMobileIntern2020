@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 
 import com.doilio.shopifymemory.R
+import com.doilio.shopifymemory.adapters.GameAdapter
 import com.doilio.shopifymemory.databinding.FragmentGameBinding
 
 /**
@@ -35,6 +36,7 @@ class GameFragment : Fragment() {
         viewModelFactory = GameViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.viewModel = viewModel
+        binding.shopifyProducts.adapter = GameAdapter()
 
 
         /*val imageList = mutableListOf(
