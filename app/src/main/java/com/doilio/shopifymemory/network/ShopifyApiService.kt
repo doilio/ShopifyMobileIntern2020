@@ -15,8 +15,8 @@ private const val PAGE = "1"
 private const val ACCESS_TOKEN = "c32313df0d0ef512ca64d5b336a0d7c6"
 
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
-    //.addConverterFactory(GsonConverterFactory.create())
+    //.addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
     .build()
 
@@ -27,7 +27,7 @@ interface ShopifyApiService {
     fun getProducts(
         @Query("page") page: String = PAGE,
         @Query("access_token") access_token: String = ACCESS_TOKEN
-    ): Call<String>
+    ): Call<ProductsResponse>
 
 
 }

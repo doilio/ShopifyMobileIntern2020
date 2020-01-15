@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Products (
 
-    @SerializedName("id") val id : Int,
+    @SerializedName("id") val id : Long,
     @SerializedName("title") val title : String,
     @SerializedName("body_html") val body_html : String,
     @SerializedName("vendor") val vendor : String,

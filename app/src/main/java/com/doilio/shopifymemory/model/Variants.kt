@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 
 data class Variants (
 
-    @SerializedName("id") val id : Int,
-    @SerializedName("product_id") val product_id : Int,
+    @SerializedName("id") val id : Long,
+    @SerializedName("product_id") val product_id : Long,
     @SerializedName("title") val title : String,
     @SerializedName("price") val price : Double,
     @SerializedName("sku") val sku : String,
@@ -26,7 +26,7 @@ data class Variants (
     @SerializedName("image_id") val image_id : String,
     @SerializedName("weight") val weight : Double,
     @SerializedName("weight_unit") val weight_unit : String,
-    @SerializedName("inventory_item_id") val inventory_item_id : Int,
+    @SerializedName("inventory_item_id") val inventory_item_id : Long,
     @SerializedName("inventory_quantity") val inventory_quantity : Int,
     @SerializedName("old_inventory_quantity") val old_inventory_quantity : Int,
     @SerializedName("requires_shipping") val requires_shipping : Boolean,

@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class Image (
 
-    @SerializedName("id") val id : Int,
-    @SerializedName("product_id") val product_id : Int,
+    @SerializedName("id") val id : Long,
+    @SerializedName("product_id") val product_id : Long,
     @SerializedName("position") val position : Int,
     @SerializedName("created_at") val created_at : String,
     @SerializedName("updated_at") val updated_at : String,

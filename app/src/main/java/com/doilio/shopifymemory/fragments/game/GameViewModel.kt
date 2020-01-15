@@ -3,6 +3,8 @@ package com.doilio.shopifymemory.fragments.game
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.doilio.shopifymemory.model.Products
+import com.doilio.shopifymemory.model.ProductsResponse
 import com.doilio.shopifymemory.network.ShopifyApi
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,13 +22,21 @@ class GameViewModel : ViewModel() {
 
     private fun getProducts() {
 
-        ShopifyApi.retrofitService.getProducts().enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
+        ShopifyApi.retrofitService.getProducts().enqueue(object : Callback<ProductsResponse> {
+            override fun onFailure(call: Call<ProductsResponse>, t: Throwable) {
                 _response.value = "Failure: ${t.message}"
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _response.value = response.body()
+            override fun onResponse(
+                call: Call<ProductsResponse>,
+                response: Response<ProductsResponse>
+            ) {
+                if (response.body() != null) {
+                    val products: List<Products> = response.body()!!.products
+
+                    _response.value = "We have ${products.size} Products"
+                }
+
             }
         })
         _response.value = "Shopify Api"
