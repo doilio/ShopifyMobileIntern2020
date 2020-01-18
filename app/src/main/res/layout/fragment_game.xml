@@ -29,13 +29,16 @@
             android:id="@+id/shopify_products"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:padding="6dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:productList="@{viewModel.products}"
-            android:clipToPadding="false"
-            app:spanCount="4"
-            tools:itemCount="20"
+            app:spanCount="6"
+            tools:itemCount="72"
             tools:listitem="@layout/game_item" />
 
 

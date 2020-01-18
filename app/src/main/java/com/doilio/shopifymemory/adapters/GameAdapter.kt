@@ -8,13 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.doilio.shopifymemory.databinding.GameItemBinding
 import com.doilio.shopifymemory.model.Products
 
-class GameAdapter : ListAdapter<Products, GameAdapter.GameViewHolder>(DiffCallback) {
+class GameAdapter(private val clickListener: GameListener) :
+    ListAdapter<Products, GameAdapter.GameViewHolder>(DiffCallback) {
 
     class GameViewHolder(private val binding: GameItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Products) {
+        fun bind(product: Products, clickListener: GameListener) {
             binding.product = product
             binding.executePendingBindings()
+            binding.clickListener = clickListener
         }
 
     }
@@ -37,7 +39,15 @@ class GameAdapter : ListAdapter<Products, GameAdapter.GameViewHolder>(DiffCallba
     }
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        holder.bind(item, clickListener)
     }
 
 }
+
+class GameListener(val clickListener: (productId: Long) -> Unit) {
+
+    fun onClick(product: Products) = clickListener(product.id)
+
+}
+

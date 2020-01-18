@@ -19,12 +19,20 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<Products>?) {
 }
 
 @BindingAdapter("imageUrl")
-fun bindImage(imgView: ImageView, url: String?) {
-
+//fun bindImage(imgView: ImageView, url: String?) {
+fun bindImage(imgView: ImageView, products: Products?) {
+    val url = products?.image?.src
+    val cardFace = products?.cardFace
     url?.let {
         val imgUri = it.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .into(imgView)
+        if (cardFace == true) {
+            imgView.setImageResource(R.drawable.slab_back)
+        } else {
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .into(imgView)
+        }
+
+
     }
 }

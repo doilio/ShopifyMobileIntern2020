@@ -4,21 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="product"
             type="com.doilio.shopifymemory.model.Products" />
 
+        <variable
+            name="clickListener"
+            type="com.doilio.shopifymemory.adapters.GameListener" />
+
     </data>
 
     <ImageView
+        android:id="@+id/product_image"
         android:layout_width="match_parent"
         android:layout_height="170dp"
         android:adjustViewBounds="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{()->clickListener.onClick(product)}"
         android:padding="2dp"
         android:scaleType="fitCenter"
-        app:imageUrl="@{product.image.src}"
+        app:imageUrl="@{product}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/back_card" />
+        tools:src="@drawable/slab_back" />
+    <!--app:imageUrl="@{product.image.src}"-->
 </layout>

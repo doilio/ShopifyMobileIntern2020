@@ -7,12 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 import com.doilio.shopifymemory.R
 import com.doilio.shopifymemory.adapters.GameAdapter
+import com.doilio.shopifymemory.adapters.GameListener
 import com.doilio.shopifymemory.databinding.FragmentGameBinding
 
 /**
@@ -36,8 +41,33 @@ class GameFragment : Fragment() {
         viewModelFactory = GameViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.viewModel = viewModel
-        binding.shopifyProducts.adapter = GameAdapter()
 
+        val adapter = GameAdapter(GameListener { productId ->
+            Toast.makeText(activity, "$productId", Toast.LENGTH_SHORT).show()
+            viewModel.onImageClicked(productId)
+
+        })
+
+        //  Lista de produtos
+        viewModel.products.observe(this, Observer { products ->
+
+            for (product in products) {
+
+                val url = product.image.src
+                val cardFace = product.cardFace
+                val imgUri = url.toUri().buildUpon().scheme("https").build()
+//                if (cardFace) {
+//                    binding. .setImageResource(R.drawable.slab_back)
+//                } else {
+//                    Glide.with(imgView.context)
+//                        .load(imgUri)
+//                        .into(imgView)
+//                }
+            }
+        })
+
+        //binding.shopifyProducts.adapter = GameAdapter()
+        binding.shopifyProducts.adapter = adapter
 
         /*val imageList = mutableListOf(
             front1,
@@ -91,11 +121,12 @@ class GameFragment : Fragment() {
         var rightMoves = 0
 
         imageList.shuffle()
+
         for (i in 0..19) {
             buttonList[i].text = "back"
             buttonList[i].textSize = 0F
 
-            buttonList[i].setOnClickListener {
+            buttonList[i].setOnClickListener {                                                      ****
 
                 if (buttonList[i].text == "back" && clicked < 2) {
                     buttonList[i].setBackgroundResource(imageList[i])

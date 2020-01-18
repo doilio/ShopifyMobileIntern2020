@@ -1,11 +1,10 @@
 package com.doilio.shopifymemory.network
 
-import com.doilio.shopifymemory.model.Products
+
 import com.doilio.shopifymemory.model.ProductsResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
@@ -15,7 +14,6 @@ private const val PAGE = "1"
 private const val ACCESS_TOKEN = "c32313df0d0ef512ca64d5b336a0d7c6"
 
 private val retrofit = Retrofit.Builder()
-    //.addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
     .build()
