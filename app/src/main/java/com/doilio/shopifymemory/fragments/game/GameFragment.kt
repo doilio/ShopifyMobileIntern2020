@@ -7,17 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.doilio.shopifymemory.adapters.GridViewAdapter
 
 import com.doilio.shopifymemory.R
-import com.doilio.shopifymemory.adapters.GameAdapter
-import com.doilio.shopifymemory.adapters.GameListener
 import com.doilio.shopifymemory.databinding.FragmentGameBinding
 
 /**
@@ -28,6 +28,7 @@ class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
     private lateinit var viewModel: GameViewModel
     private lateinit var viewModelFactory: GameViewModelFactory
+    private val gameTag = GameFragment::class.java.simpleName
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,140 +41,82 @@ class GameFragment : Fragment() {
 
         viewModelFactory = GameViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
-        binding.viewModel = viewModel
-
-        val adapter = GameAdapter(GameListener { productId ->
-            Toast.makeText(activity, "$productId", Toast.LENGTH_SHORT).show()
-            viewModel.onImageClicked(productId)
-
-        })
 
         //  Lista de produtos
         viewModel.products.observe(this, Observer { products ->
 
-            for (product in products) {
 
-                val url = product.image.src
-                val cardFace = product.cardFace
-                val imgUri = url.toUri().buildUpon().scheme("https").build()
-//                if (cardFace) {
-//                    binding. .setImageResource(R.drawable.slab_back)
-//                } else {
-//                    Glide.with(imgView.context)
-//                        .load(imgUri)
-//                        .into(imgView)
-//                }
-            }
-        })
+            val adapter = GridViewAdapter(
+                activity!!.applicationContext,
+                products
+            )
+            binding.gridView.adapter = adapter
 
-        //binding.shopifyProducts.adapter = GameAdapter()
-        binding.shopifyProducts.adapter = adapter
+            var clicked = 0
+            var firstClicked = -1L
+            var secondClicked = -1L
+            binding.gridView.setOnItemClickListener { parent, view, position, _ ->
 
-        /*val imageList = mutableListOf(
-            front1,
-            front2,
-            front3,
-            front4,
-            front5,
-            front6,
-            front7,
-            front8,
-            front9,
-            front10,
-            front1,
-            front2,
-            front3,
-            front4,
-            front5,
-            front6,
-            front7,
-            front8,
-            front9,
-            front10
-        )
-        val buttonList: Array<Button> = arrayOf(
-            binding.button1,
-            binding.button2,
-            binding.button3,
-            binding.button4,
-            binding.button5,
-            binding.button6,
-            binding.button7,
-            binding.button8,
-            binding.button9,
-            binding.button10,
-            binding.button11,
-            binding.button12,
-            binding.button13,
-            binding.button14,
-            binding.button15,
-            binding.button16,
-            binding.button17,
-            binding.button18,
-            binding.button19,
-            binding.button20
-        )
+                val product = products[position]
+                val productImage = product.image.src
+                val gridItemText = view.findViewById<TextView>(R.id.card_text)
+                val gridItem = view.findViewById<ImageView>(R.id.product_image)
 
-        var clicked = 0
-        var firstClicked = -1
-        var secondClicked = -1
-        var wrongMoves = 0
-        var rightMoves = 0
 
-        imageList.shuffle()
+                // Logica para o jogo
+                if (gridItemText.text == "back") {
+                    if (clicked < 2) {
 
-        for (i in 0..19) {
-            buttonList[i].text = "back"
-            buttonList[i].textSize = 0F
-
-            buttonList[i].setOnClickListener {                                                      ****
-
-                if (buttonList[i].text == "back" && clicked < 2) {
-                    buttonList[i].setBackgroundResource(imageList[i])
-                    buttonList[i].text = imageList[i].toString()
-
-                    if (clicked == 0) {
-                        firstClicked = i
-                    } else {
-                        secondClicked = i
-                    }
-                    clicked++
-                    if (clicked == 2) {
-                        if (buttonList[firstClicked].text == buttonList[secondClicked].text) {
-                            Toast.makeText(context, "Same items", Toast.LENGTH_SHORT).show()
-                            buttonList[firstClicked].isClickable = false
-                            buttonList[secondClicked].isClickable = false
-                            rightMoves++
-                            binding.player1Count.text = rightMoves.toString()
-                            clicked = 0
+                        if (clicked == 0) {
+                            firstClicked = product.id
                         } else {
-                            Toast.makeText(context, "Different", Toast.LENGTH_SHORT).show()
-                            wrongMoves++
+                            secondClicked = product.id
                         }
-                        update(rightMoves, wrongMoves)
-                    }
+                        Glide.with(view.context).load(productImage).into(gridItem)
+                        clicked++
+                        Log.d(
+                            gameTag, "Clicked ${gridItemText.text}, Count $clicked  at position $position"
+                        )
+                        gridItemText.text = product.id.toString()
+                        if (clicked == 2) {
+                            // Comparar os itens
+                            if (firstClicked == secondClicked) {
+                                Toast.makeText(activity, "Same Items!", Toast.LENGTH_SHORT)
+                                    .show()
 
-                } else if (buttonList[i].text != "back") {
-                    buttonList[i].setBackgroundResource(back_card)
-                    buttonList[i].text = "back"
-                    if (clicked == 0) {
-                        firstClicked = -1
-                    } else {
-                        secondClicked = -1
+                                product.cardFace = true
+                                clicked = 0
+
+                            } else {
+                                Log.d(gameTag, "Different Items!")
+                            }
+
+                        }
+
+                    }else{
+                        Toast.makeText(activity, "You can only open 2 cards!", Toast.LENGTH_SHORT)
+                            .show()
                     }
+                } else {
+                    Glide.with(view.context).load(R.drawable.slab_back).into(gridItem)
                     clicked--
+                    Log.d(
+                        gameTag,
+                        "Clicked ${gridItemText.text}, Count $clicked  at position $position"
+                    )
+                    gridItemText.text = "back"
                 }
+
+
             }
 
-        }
-*/
+        })
 
         return binding.root
     }
 
-
     private fun update(rightMoves: Int, wrongMoves: Int) {
-        Log.d("VERIFICACAO", "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
+        Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
         if (rightMoves == 10) {
             findNavController().navigate(GameFragmentDirections.actionGameFragmentToWinnerFragment())
         }

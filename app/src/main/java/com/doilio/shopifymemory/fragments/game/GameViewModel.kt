@@ -1,6 +1,5 @@
 package com.doilio.shopifymemory.fragments.game
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,10 +21,6 @@ class GameViewModel : ViewModel() {
     val products: LiveData<List<Products>>
         get() = _products
 
-    private var _matcher = MutableLiveData<Int>()
-    val matcher: LiveData<Int>
-        get() = _matcher
-
     private var gameList = ArrayList<Products>()
 
     init {
@@ -46,9 +41,7 @@ class GameViewModel : ViewModel() {
                 if (response.body() != null) {
                     val products: List<Products> = response.body()!!.products
                     shuffleList(products)
-                    //_products.value = products
                     _products.value = gameList
-                    //_response.value = "We have ${products.size} Products"
                 }
 
             }
@@ -66,7 +59,6 @@ class GameViewModel : ViewModel() {
         // Pegar 10 produtos
         val subList = myList.subList(0, 24)
         // Criar lista a ser usada no jogo
-        //val gameList = ArrayList<Products>()
         // Duplicar a lista de 10 itens
         gameList.addAll(subList)
         gameList.addAll(subList)
@@ -74,47 +66,5 @@ class GameViewModel : ViewModel() {
         gameList.shuffle()
 
     }
-
-    fun onImageClicked(productId: Long) {
-
-        for (product in gameList) {
-            if (product.id == productId) {
-                if (!product.cardFace){
-                    product.cardFace = true
-                }else{
-                    Log.d("Status", "This is already True")
-                }
-            }
-        }
-
-    }
-
-/*    fun getSubList(myList: List<Products>): List<Products> {
-        val gameList = ArrayList<Products>()
-        return when (_matcher.value) {
-            2 -> {
-                gameList.addAll(myList)
-                gameList.addAll(myList)
-                gameList.shuffle()
-                gameList
-            }
-            3 -> {
-                gameList.addAll(myList)
-                gameList.addAll(myList)
-                gameList.addAll(myList)
-                gameList.shuffle()
-                gameList
-            }
-            4 -> {
-                gameList.addAll(myList)
-                gameList.addAll(myList)
-                gameList.addAll(myList)
-                gameList.addAll(myList)
-                gameList.shuffle()
-                gameList
-            }
-            else -> ArrayList()
-        }
-    }*/
 
 }
