@@ -96,6 +96,7 @@ class GameFragment : Fragment() {
                     } else {
                         secondClicked = i
                     }
+
                     clicked++
                     if (clicked == 2) {
                         if (buttonList[firstClicked].text == buttonList[secondClicked].text) {
