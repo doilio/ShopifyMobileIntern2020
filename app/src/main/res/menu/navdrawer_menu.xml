@@ -7,10 +7,6 @@
         android:title="@string/menu_rules" />
 
     <item
-        android:id="@+id/shareApp"
-        android:icon="@drawable/ic_share_black_24dp"
-        android:title="@string/menu_share" />
-    <item
         android:id="@+id/aboutFragment"
         android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/menu_about" />

@@ -26,7 +26,7 @@
         tools:layout="@layout/fragment_rules" />
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.doilio.shopifymemory.fragments.GameFragment"
+        android:name="com.doilio.shopifymemory.fragments.game.GameFragment"
         android:label="Memory Game"
         tools:layout="@layout/fragment_game">
         <action
