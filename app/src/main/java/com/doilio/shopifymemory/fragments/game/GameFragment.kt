@@ -107,7 +107,6 @@ class GameFragment : Fragment() {
                     gridItemText.text = "back"
                 }
 
-
             }
 
         })
