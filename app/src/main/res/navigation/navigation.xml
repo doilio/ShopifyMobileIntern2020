@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/winnerFragment"
-        android:name="com.doilio.shopifymemory.fragments.WinnerFragment"
+        android:name="com.doilio.shopifymemory.fragments.winner.WinnerFragment"
         android:label="You Won"
         tools:layout="@layout/fragment_winner">
         <action

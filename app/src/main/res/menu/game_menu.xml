@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/match_two"
+        android:title="@string/match_2"
+        android:orderInCategory="10"
+        android:contentDescription="@string/game_option"
+        />
+    <item
+        android:id="@+id/match_three"
+        android:title="@string/match_3"
+        android:orderInCategory="20"
+        android:contentDescription="@string/game_option"
+        />
+    <item
+        android:id="@+id/match_four"
+        android:title="@string/match_4"
+        android:orderInCategory="30"
+        android:contentDescription="@string/game_option"
+        />
+
+
+</menu>

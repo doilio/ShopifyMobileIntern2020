@@ -1,13 +1,14 @@
-package com.doilio.shopifymemory.fragments
+package com.doilio.shopifymemory.fragments.winner
 
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 
 import com.doilio.shopifymemory.R
 import com.doilio.shopifymemory.databinding.FragmentWinnerBinding
@@ -19,6 +20,7 @@ class WinnerFragment : Fragment() {
 
     private lateinit var binding: FragmentWinnerBinding
     private lateinit var args: WinnerFragmentArgs
+    private lateinit var viewModel: WinnerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,9 +29,25 @@ class WinnerFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_winner, container, false)
         setHasOptionsMenu(true)
-         args = WinnerFragmentArgs.fromBundle(arguments!!)
+        args = WinnerFragmentArgs.fromBundle(arguments!!)
 
-        binding.winnerMessage.text = "You won the game with ${args.pairsMatched} Pairs Matched! \nand only ${args.wrongMoves} Wrong Moves."
+        val viewModelFactory = WinnerViewModelFactory()
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(WinnerViewModel::class.java)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
+        viewModel.navigateToGameFragment.observe(this, Observer {
+            it?.let {
+                if (it) {
+                    findNavController().navigate(WinnerFragmentDirections.actionWinnerFragmentToGameFragment())
+                    viewModel.navigateCompleted()
+                }
+            }
+        })
+
+        binding.winnerMessage.text =
+            "You won the game with ${args.pairsMatched} Pairs Matched! \nand only ${args.wrongMoves} Wrong Moves."
+
 
         return binding.root
     }

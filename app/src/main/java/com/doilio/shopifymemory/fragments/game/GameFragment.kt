@@ -3,13 +3,12 @@ package com.doilio.shopifymemory.fragments.game
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -29,6 +28,7 @@ class GameFragment : Fragment() {
     private lateinit var viewModel: GameViewModel
     private lateinit var viewModelFactory: GameViewModelFactory
     private val gameTag = GameFragment::class.java.simpleName
+    private var totalRightMoves = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,7 @@ class GameFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game, container, false)
-
+        setHasOptionsMenu(true)
         binding.lifecycleOwner = this
 
         viewModelFactory = GameViewModelFactory()
@@ -58,6 +58,7 @@ class GameFragment : Fragment() {
             var secondClicked = -1L
             var rightMoves = 0
             var wrongMoves = 0
+            totalRightMoves = products.size / 2
 
             binding.gridView.setOnItemClickListener { _, view, position, _ ->
 
@@ -122,7 +123,9 @@ class GameFragment : Fragment() {
 
     private fun update(rightMoves: Int, wrongMoves: Int) {
         Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
-        if (rightMoves == 1) {
+        (activity as AppCompatActivity).supportActionBar?.title =
+            getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
+        if (rightMoves == totalRightMoves) {
             findNavController().navigate(
                 GameFragmentDirections.actionGameFragmentToWinnerFragment(
                     rightMoves,
@@ -131,6 +134,31 @@ class GameFragment : Fragment() {
             )
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.game_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.match_two -> {
+                Toast.makeText(activity, "2", Toast.LENGTH_SHORT).show()
+                viewModel.gameOptions.postValue(2)
+            }
+            R.id.match_three -> {
+                Toast.makeText(activity, "3", Toast.LENGTH_SHORT).show()
+                viewModel.gameOptions.postValue(3)
+            }
+            R.id.match_four -> {
+                Toast.makeText(activity, "4", Toast.LENGTH_SHORT).show()
+                viewModel.gameOptions.postValue(4)
+            }
+            else -> Log.d(gameTag, "Invalid Option")
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

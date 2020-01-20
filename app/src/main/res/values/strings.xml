@@ -15,6 +15,7 @@
     <string name="play_again">Play Again</string>
     <string name="game_rules">You Start the game with a set of mixed cards facing down, you can turn over any two cards, If the two cards match, keep them, if they don\'t match turn them back over. \n\nMake sure to remember what was on each card and where it was before you turn them back down, The game is over when all the cards have been matched.</string>
     <string name="shopimemory_rules">ShopiMemory Rules</string>
+    <string name="game_fragment_title">Pairs Matched (%1$d/%2$d)</string>
 
     <!--About Page-->
     <string name="versao_nr" translatable="false">1.0.0</string>
@@ -38,4 +39,8 @@
     <string name="back">back</string>
     <string name="product_image_back_part">Product image back part</string>
     <string name="status_image">Status Image can be Loading or showing Network Error</string>
+    <string name="match_2">Match 2</string>
+    <string name="game_option">Game Option</string>
+    <string name="match_4">Match 4</string>
+    <string name="match_3">Match 3</string>
 </resources>

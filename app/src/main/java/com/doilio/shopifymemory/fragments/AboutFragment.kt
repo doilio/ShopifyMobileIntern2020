@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.doilio.shopifymemory.R
 import mehdi.sakout.aboutpage.AboutPage
 import mehdi.sakout.aboutpage.Element
-import java.lang.String
 import java.util.*
 
 
@@ -24,9 +23,8 @@ class AboutFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_about, container, false)
         val versionElement = Element()
-        versionElement.setTitle(getString(R.string.versao) + getString(R.string.versao_nr))
+        versionElement.title = getString(R.string.versao) + getString(R.string.versao_nr)
 
         return AboutPage(context)
             .isRTL(false)
