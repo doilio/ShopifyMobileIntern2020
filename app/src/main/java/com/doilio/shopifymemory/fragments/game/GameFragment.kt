@@ -55,6 +55,9 @@ class GameFragment : Fragment() {
             var clicked = 0
             var firstClicked = -1L
             var secondClicked = -1L
+            var rightMoves = 0
+            var wrongMoves = 0
+
             binding.gridView.setOnItemClickListener { parent, view, position, _ ->
 
                 val product = products[position]
@@ -75,7 +78,8 @@ class GameFragment : Fragment() {
                         Glide.with(view.context).load(productImage).into(gridItem)
                         clicked++
                         Log.d(
-                            gameTag, "Clicked ${gridItemText.text}, Count $clicked  at position $position"
+                            gameTag,
+                            "Clicked ${gridItemText.text}, Count $clicked  at position $position"
                         )
                         gridItemText.text = product.id.toString()
                         if (clicked == 2) {
@@ -83,17 +87,18 @@ class GameFragment : Fragment() {
                             if (firstClicked == secondClicked) {
                                 Toast.makeText(activity, "Same Items!", Toast.LENGTH_SHORT)
                                     .show()
-
+                                rightMoves++
                                 product.cardFace = true
                                 clicked = 0
 
                             } else {
+                                wrongMoves++
                                 Log.d(gameTag, "Different Items!")
                             }
 
                         }
 
-                    }else{
+                    } else {
                         Toast.makeText(activity, "You can only open 2 cards!", Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -107,6 +112,7 @@ class GameFragment : Fragment() {
                     gridItemText.text = "back"
                 }
 
+                update(rightMoves,wrongMoves)
             }
 
         })
@@ -116,8 +122,9 @@ class GameFragment : Fragment() {
 
     private fun update(rightMoves: Int, wrongMoves: Int) {
         Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
-        if (rightMoves == 10) {
-            findNavController().navigate(GameFragmentDirections.actionGameFragmentToWinnerFragment())
+        if (rightMoves == 24) {
+            findNavController().navigate(GameFragmentDirections.actionGameFragmentToWinnerFragment(rightMoves,wrongMoves))
+
         }
     }
 

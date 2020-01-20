@@ -43,5 +43,11 @@
             app:destination="@id/gameFragment"
             app:popUpTo="@+id/gameFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="PairsMatched"
+            app:argType="integer" />
+        <argument
+            android:name="WrongMoves"
+            app:argType="integer" />
     </fragment>
 </navigation>
