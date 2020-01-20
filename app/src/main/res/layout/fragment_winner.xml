@@ -14,6 +14,7 @@
         tools:context=".fragments.WinnerFragment">
 
         <ImageView
+            android:contentDescription="@string/trophy_image"
             android:id="@+id/imageView3"
             android:layout_width="0dp"
             android:layout_height="300dp"
@@ -46,18 +47,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            tools:text="You won the game with XX Pairs Matched\n and only XX Wrong Moves"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView3"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:text="You won the game with XX Pairs Matched\n and only XX Wrong Moves" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:textStyle="bold"
+            android:textColor="#35A571"
             android:text="@string/play_again"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

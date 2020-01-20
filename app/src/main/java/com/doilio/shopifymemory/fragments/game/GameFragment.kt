@@ -58,7 +58,7 @@ class GameFragment : Fragment() {
             var rightMoves = 0
             var wrongMoves = 0
 
-            binding.gridView.setOnItemClickListener { parent, view, position, _ ->
+            binding.gridView.setOnItemClickListener { _, view, position, _ ->
 
                 val product = products[position]
                 val productImage = product.image.src
@@ -85,8 +85,7 @@ class GameFragment : Fragment() {
                         if (clicked == 2) {
                             // Comparar os itens
                             if (firstClicked == secondClicked) {
-                                Toast.makeText(activity, "Same Items!", Toast.LENGTH_SHORT)
-                                    .show()
+                                Log.d(gameTag, "Same Items!")
                                 rightMoves++
                                 product.cardFace = true
                                 clicked = 0
@@ -109,7 +108,7 @@ class GameFragment : Fragment() {
                         gameTag,
                         "Clicked ${gridItemText.text}, Count $clicked  at position $position"
                     )
-                    gridItemText.text = "back"
+                    gridItemText.text = getString(R.string.back)
                 }
 
                 update(rightMoves,wrongMoves)
@@ -122,7 +121,7 @@ class GameFragment : Fragment() {
 
     private fun update(rightMoves: Int, wrongMoves: Int) {
         Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
-        if (rightMoves == 24) {
+        if (rightMoves == 1) {
             findNavController().navigate(GameFragmentDirections.actionGameFragmentToWinnerFragment(rightMoves,wrongMoves))
 
         }

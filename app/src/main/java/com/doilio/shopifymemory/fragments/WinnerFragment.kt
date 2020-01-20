@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 
@@ -17,9 +18,8 @@ import com.doilio.shopifymemory.databinding.FragmentWinnerBinding
 class WinnerFragment : Fragment() {
 
     private lateinit var binding: FragmentWinnerBinding
-    private val args = WinnerFragmentArgs.fromBundle(arguments!!)
-    private val pairsMatched = args.pairsMatched
-    private val wrongMoves = args.wrongMoves
+    private lateinit var args: WinnerFragmentArgs
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,8 +27,9 @@ class WinnerFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_winner, container, false)
         setHasOptionsMenu(true)
+         args = WinnerFragmentArgs.fromBundle(arguments!!)
 
-        binding.winnerMessage.text = "You won the game with $pairsMatched Pairs Matched\\n and only $wrongMoves Wrong Moves"
+        binding.winnerMessage.text = "You won the game with ${args.pairsMatched} Pairs Matched! \nand only ${args.wrongMoves} Wrong Moves."
 
         return binding.root
     }
@@ -42,8 +43,7 @@ class WinnerFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.share -> {
-
-                shareVictory("I Just won the Shopify Memory Game with $pairsMatched pairs matched and only $wrongMoves wrong moves. Try it out ***link****")
+                shareVictory("I Just won the Shopify Memory Game with ${args.pairsMatched} pairs matched and only ${args.wrongMoves} wrong moves. Try it out *link*")
             }
         }
         return super.onOptionsItemSelected(item)

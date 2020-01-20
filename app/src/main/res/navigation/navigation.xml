@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -27,22 +31,31 @@
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.doilio.shopifymemory.fragments.game.GameFragment"
-        android:label="Memory Game"
+        android:label="Pairs Matched(0/24)"
         tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/action_gameFragment_to_winnerFragment"
-            app:destination="@id/winnerFragment" />
+            app:destination="@id/winnerFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            app:popUpTo="@+id/gameFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/winnerFragment"
         android:name="com.doilio.shopifymemory.fragments.WinnerFragment"
-        android:label="Winner"
-        tools:layout="@layout/fragment_winner" >
+        android:label="You Won"
+        tools:layout="@layout/fragment_winner">
         <action
             android:id="@+id/action_winnerFragment_to_gameFragment"
             app:destination="@id/gameFragment"
-            app:popUpTo="@+id/gameFragment"
-            app:popUpToInclusive="true" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/mainFragment" />
         <argument
             android:name="PairsMatched"
             app:argType="integer" />

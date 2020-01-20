@@ -21,6 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/shopify_logo_dark" />
+            app:srcCompat="@drawable/shopify_logo_dark"
+            android:contentDescription="@string/shopify_logo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

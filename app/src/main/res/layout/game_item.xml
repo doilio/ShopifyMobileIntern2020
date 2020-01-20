@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
+            android:contentDescription="@string/product_image_back_part"
             android:id="@+id/product_image"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -26,7 +27,7 @@
             android:id="@+id/card_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="back"
+            android:text="@string/back"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/product_image"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,9 +36,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <!--app:imageUrl="@{product.image.src}"-->
-    <!--    android:onClick="@{()->clickListener.onClick(product)}"-->
-
-    <!--    app:imageUrl="@{product}"-->
 </layout>
