@@ -37,4 +37,5 @@
     <string name="about_fragment">About Fragment</string>
     <string name="back">back</string>
     <string name="product_image_back_part">Product image back part</string>
+    <string name="status_image">Status Image can be Loading or showing Network Error</string>
 </resources>

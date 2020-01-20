@@ -41,6 +41,7 @@ class GameFragment : Fragment() {
 
         viewModelFactory = GameViewModelFactory()
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
+        binding.viewModel = viewModel
 
         //  Lista de produtos
         viewModel.products.observe(this, Observer { products ->
@@ -111,7 +112,7 @@ class GameFragment : Fragment() {
                     gridItemText.text = getString(R.string.back)
                 }
 
-                update(rightMoves,wrongMoves)
+                update(rightMoves, wrongMoves)
             }
 
         })
@@ -122,7 +123,12 @@ class GameFragment : Fragment() {
     private fun update(rightMoves: Int, wrongMoves: Int) {
         Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
         if (rightMoves == 1) {
-            findNavController().navigate(GameFragmentDirections.actionGameFragmentToWinnerFragment(rightMoves,wrongMoves))
+            findNavController().navigate(
+                GameFragmentDirections.actionGameFragmentToWinnerFragment(
+                    rightMoves,
+                    wrongMoves
+                )
+            )
 
         }
     }

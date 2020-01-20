@@ -10,6 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+enum class ShopifyApiStatus { LOADING, ERROR, DONE }
 
 class GameViewModel : ViewModel() {
 
@@ -22,8 +23,12 @@ class GameViewModel : ViewModel() {
         get() = _products
 
     private var gameList = ArrayList<Products>()
+    private var _status = MutableLiveData<ShopifyApiStatus>()
+    val status: LiveData<ShopifyApiStatus>
+        get() = _status
 
     init {
+        _status.value = ShopifyApiStatus.LOADING
         getProducts()
     }
 
@@ -32,6 +37,7 @@ class GameViewModel : ViewModel() {
         ShopifyApi.retrofitService.getProducts().enqueue(object : Callback<ProductsResponse> {
             override fun onFailure(call: Call<ProductsResponse>, t: Throwable) {
                 _response.value = "Failure: ${t.message}"
+                _status.value = ShopifyApiStatus.ERROR
             }
 
             override fun onResponse(
@@ -39,14 +45,16 @@ class GameViewModel : ViewModel() {
                 response: Response<ProductsResponse>
             ) {
                 if (response.body() != null) {
+                    //_loading.value = false
                     val products: List<Products> = response.body()!!.products
+                    _status.value = ShopifyApiStatus.DONE
                     shuffleList(products)
                     _products.value = gameList
                 }
 
             }
         })
-        _response.value = "Shopify Api"
+        //_response.value = "Shopify Api"
     }
 
     private fun shuffleList(products: List<Products>) {
