@@ -4,7 +4,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="rules_title">The Rules for playing Memory</string>
-    <string name="rules_text">Step 1.\nMix up the cards.  \n\nStep 2.\nLay them in rows, face down.   \n\nStep 3.\nTurn over any two cards.   \n\nStep 4.\nIf the two cards match, keep them.   \n\nStep 5.\nIf they don\'t match, turn them back over.   \n\nStep 6.\nRemember what was on each card and where it was.   \n\nStep 7.\nWatch and remember during the other player\'s turn.   \n\nStep 8.\nThe game is over when all the cards have been matched.   \n\nStep 9.\nThe player with the most matches wins.   \n\nStep 10.\nHave fun</string>
     <string name="share_score">Share Score</string>
     <string name="menu_rules">Rules</string>
     <string name="menu_share">Share</string>
@@ -14,5 +13,23 @@
     <string name="settings">Settings</string>
     <string name="congratulations">Congratulations!</string>
     <string name="play_again">Play Again</string>
-    <string name="game_rules">You Start the game with a set of mixed cards facing down, you can turn over any two cards, If the two cards match, keep them, if they don\'t match turn them back over. \n\n Make sure to remember what was on each card and where it was before you turn them back down, The game is over when all the cards have been matched.</string>
+    <string name="game_rules">You Start the game with a set of mixed cards facing down, you can turn over any two cards, If the two cards match, keep them, if they don\'t match turn them back over. \n\nMake sure to remember what was on each card and where it was before you turn them back down, The game is over when all the cards have been matched.</string>
+    <string name="shopimemory_rules">ShopiMemory Rules</string>
+
+    <!--About Page-->
+    <string name="versao_nr" translatable="false">1.0.0</string>
+    <string name="versao">Version</string>
+    <string name="about_descricao">This is a Memory Game proposed by Shopify for the Mobile Developers summer internship challenge 2020</string>
+    <string name="about_fale_conosco">Contact Us</string>
+    <string name="dev_email" translatable="false">doiliomatsinhe@hotmail.com</string>
+    <string name="acesse_nosso_site">Access my website</string>
+    <string name="envie_email">Send me an e-mail</string>
+    <string name="redes_sociais">Social Networks</string>
+    <string name="dev_website" translatable="false">https://medium.com/@doiliomatsinhe/</string>
+    <string name="dev_facebook_page" translatable="false">doilio.matsinhe</string>
+    <string name="dev_github_page" translatable="false">doilio</string>
+    <string name="dev_instagram_page" translatable="false">doiliomatsinhe</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="instagram" translatable="false">Instagram</string>
+    <string name="github" translatable="false">GitHub</string>
 </resources>

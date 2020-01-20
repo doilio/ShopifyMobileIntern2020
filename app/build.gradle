@@ -55,7 +55,10 @@ dependencies {
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
 
-    //Glide Image Loading Library
+    // Glide Image Loading Library
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // About Page
+    implementation 'com.github.medyo:android-about-page:1.2.5'
 }
