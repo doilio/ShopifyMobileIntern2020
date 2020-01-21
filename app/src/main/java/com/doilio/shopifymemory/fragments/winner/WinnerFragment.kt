@@ -20,7 +20,6 @@ class WinnerFragment : Fragment() {
 
     private lateinit var binding: FragmentWinnerBinding
     private lateinit var args: WinnerFragmentArgs
-    private lateinit var viewModel: WinnerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,7 +31,7 @@ class WinnerFragment : Fragment() {
         args = WinnerFragmentArgs.fromBundle(arguments!!)
 
         val viewModelFactory = WinnerViewModelFactory()
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(WinnerViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(WinnerViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -51,7 +50,6 @@ class WinnerFragment : Fragment() {
 
         binding.winnerMessage.text =
             "You won the game with ${args.pairsMatched} Pairs Matched! \nand only ${args.wrongMoves} Wrong Moves. \nGame Mode: \nMatch ${args.pairsUsed}"
-
 
         return binding.root
     }
@@ -74,9 +72,9 @@ class WinnerFragment : Fragment() {
 
     private fun shareVictory(msg: String) {
         val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
+        intent.type = getString(R.string.intent_type)
         intent.putExtra(Intent.EXTRA_TEXT, msg)
-        startActivity(Intent.createChooser(intent, "Share victory using:"))
+        startActivity(Intent.createChooser(intent, getString(R.string.share_text)))
     }
 
 

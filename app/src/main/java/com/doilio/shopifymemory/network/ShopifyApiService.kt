@@ -13,11 +13,17 @@ private const val BASE_URL = "https://shopicruit.myshopify.com/"
 private const val PAGE = "1"
 private const val ACCESS_TOKEN = "c32313df0d0ef512ca64d5b336a0d7c6"
 
+/**
+ * Creates the retrofit object with a Gson Converter
+ */
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
     .build()
 
+/**
+ * Creates the Call to the API's endpoint with the specified parameters
+ */
 interface ShopifyApiService {
 
     @Headers("Accept: application/json")
@@ -30,6 +36,9 @@ interface ShopifyApiService {
 
 }
 
+/**
+ * Creates the RetrofitService object used to access the getProducts function anywhere in the code
+ */
 object ShopifyApi {
 
     val retrofitService: ShopifyApiService by lazy {

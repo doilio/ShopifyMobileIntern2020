@@ -58,6 +58,9 @@ class GameViewModel(val pairs: Int) : ViewModel() {
         }
     }
 
+    /**
+     * Method to get the list from the Shopify Api
+     */
     private fun getProducts() {
 
         ShopifyApi.retrofitService.getProducts().enqueue(object : Callback<ProductsResponse> {
@@ -81,6 +84,10 @@ class GameViewModel(val pairs: Int) : ViewModel() {
         })
     }
 
+    /**
+     * Receives the list of products, shuffles all of the list so that the player gets a chance to use all of the products in the API
+     * after that we check what game mode the user selected and multiply the list accordingly.
+     */
     private fun shuffleList(products: List<Products>) {
 
         val myList = ArrayList<Products>()

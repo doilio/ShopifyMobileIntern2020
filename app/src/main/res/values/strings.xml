@@ -43,4 +43,6 @@
     <string name="game_option">Game Option</string>
     <string name="match_4">Match 4</string>
     <string name="match_3">Match 3</string>
+    <string name="share_text">Share victory using:</string>
+    <string name="intent_type">text/plain</string>
 </resources>

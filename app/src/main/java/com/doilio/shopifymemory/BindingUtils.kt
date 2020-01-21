@@ -8,6 +8,9 @@ import com.doilio.shopifymemory.fragments.game.ShopifyApiStatus
 @BindingAdapter("shopifyApiStatus")
 fun bindStatus(imgView: ImageView, status: ShopifyApiStatus) {
 
+    /**
+     * Used to handle the response of the retrofit call in specific cases {Loafing, Loaded, Error}
+     */
     when (status) {
         ShopifyApiStatus.LOADING -> {
             imgView.visibility = View.VISIBLE

@@ -20,7 +20,7 @@ class GridViewAdapter(private val context: Context, private val list: List<Produ
         val product = list[position]
         if (gridItemText.text == "back") {
             Glide.with(context).load(R.drawable.slab_back).into(gridItem)
-            //Glide.with(context).load(product.image.src).into(gridItem) //TEST
+            //Glide.with(context).load(product.image.src).into(gridItem) //Used For Testing to Avoid Memorizing the images
         } else {
             Glide.with(context).load(product.image.src).into(gridItem)
         }
