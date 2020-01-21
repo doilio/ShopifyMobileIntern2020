@@ -14,7 +14,7 @@ import retrofit2.Response
 
 enum class ShopifyApiStatus { LOADING, ERROR, DONE }
 
-class GameViewModel : ViewModel() {
+class GameViewModel(val pairs: Int) : ViewModel() {
 
     private var _response = MutableLiveData<String>()
     val response: LiveData<String>
@@ -29,16 +29,36 @@ class GameViewModel : ViewModel() {
     val status: LiveData<ShopifyApiStatus>
         get() = _status
 
-
-//     var gameOptions: Int? = 0
-
     var gameOptions = MutableLiveData<Int>()
-   // val gameOption get() = _gameOption
+
+
+    private val _rightMoves = MutableLiveData<Int>()
+    val rightMoves: LiveData<Int>
+        get() = _rightMoves
+    private val _wrongMoves = MutableLiveData<Int>()
+    val wrongMoves: LiveData<Int>
+        get() = _wrongMoves
+    private val _totalRightMoves = MutableLiveData<Int>()
+    val totalRightMoves: LiveData<Int>
+        get() = _totalRightMoves
 
 
     init {
+        _rightMoves.value = 0
+        _wrongMoves.value = 0
+        _totalRightMoves.value = initializeTotalRightMoves()
+        Log.d("ViewModel", "Valor passado: $pairs")
         _status.value = ShopifyApiStatus.LOADING
         getProducts()
+    }
+
+    private fun initializeTotalRightMoves(): Int? {
+        return when (pairs) {
+            2 -> 24
+            3 -> 16
+            4 -> 12
+            else -> -1
+        }
     }
 
     private fun getProducts() {
@@ -54,7 +74,6 @@ class GameViewModel : ViewModel() {
                 response: Response<ProductsResponse>
             ) {
                 if (response.body() != null) {
-                    //_loading.value = false
                     val products: List<Products> = response.body()!!.products
                     _status.value = ShopifyApiStatus.DONE
                     shuffleList(products)
@@ -63,7 +82,6 @@ class GameViewModel : ViewModel() {
 
             }
         })
-        //_response.value = "Shopify Api"
     }
 
     private fun shuffleList(products: List<Products>) {
@@ -71,65 +89,44 @@ class GameViewModel : ViewModel() {
         val myList = ArrayList<Products>()
         myList.addAll(products)
 
-/*        // I choose to Shuffle all the list even tho I wont be using all of it. Because I want to have more product diversity on each game
-        myList.shuffle()
-        // Pegar 10 produtos
-        val subList = myList.subList(0, 24)
-        // Criar lista a ser usada no jogo
-        // Duplicar a lista de 10 itens
-        gameList.addAll(subList)
-        gameList.addAll(subList)
-        // Baralhar a lista duplicada com X itens
-        gameList.shuffle()*/
-        myList.shuffle()
-        Log.d("ViewModel","Opcao:  e ${gameOptions.value}")
-        when (gameOptions.value) {
+        myList.shuffle() // I choose to Shuffle all the list even tho I wont be using all of it. Because I want to have more product diversity on each game
+        when (pairs) {
             2 -> {
-                //Duplicate list items
+                //Duplicate list items and shuffle
                 val subList = myList.subList(0, 24)
-                // Criar lista a ser usada no jogo
-                // Duplicar a lista de 10 itens
                 gameList.addAll(subList)
                 gameList.addAll(subList)
                 gameList.shuffle()
-                getProducts()
+
             }
             3 -> {
-                // Triple list items
+                // Triple list items and shuffle
                 val subList = myList.subList(0, 16)
-                // Criar lista a ser usada no jogo
-                // Duplicar a lista de 10 itens
                 gameList.addAll(subList)
                 gameList.addAll(subList)
                 gameList.addAll(subList)
                 gameList.shuffle()
-                getProducts()
             }
             4 -> {
-                // Quadruple list items
-                // Triple list items
+                // Quadruple list items and shuffle
                 val subList = myList.subList(0, 12)
-                // Criar lista a ser usada no jogo
-                // Duplicar a lista de 10 itens
                 gameList.addAll(subList)
                 gameList.addAll(subList)
                 gameList.addAll(subList)
                 gameList.addAll(subList)
                 gameList.shuffle()
-                getProducts()
             }
-            else ->{
-                // Pegar 10 produtos
-                val subList = myList.subList(0, 24)
-                // Criar lista a ser usada no jogo
-                // Duplicar a lista de 10 itens
-                gameList.addAll(subList)
-                gameList.addAll(subList)
-                // Baralhar a lista duplicada com X itens
-                gameList.shuffle()
-            }
+
         }
 
+    }
+
+    fun incrementRightMoves() {
+        _rightMoves.value = _rightMoves.value?.plus(1)
+    }
+
+    fun incrementWrongMoves() {
+        _wrongMoves.value = _wrongMoves.value?.plus(1)
     }
 
 }

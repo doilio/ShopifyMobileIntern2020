@@ -39,7 +39,7 @@ class WinnerFragment : Fragment() {
         viewModel.navigateToGameFragment.observe(this, Observer {
             it?.let {
                 if (it) {
-                    findNavController().navigate(WinnerFragmentDirections.actionWinnerFragmentToGameFragment())
+                    findNavController().navigate(WinnerFragmentDirections.actionWinnerFragmentToGameFragment(2))
                     viewModel.navigateCompleted()
                 }
             }

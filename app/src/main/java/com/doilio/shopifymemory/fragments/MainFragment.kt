@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         setHasOptionsMenu(true)
-        binding.buttonPlay.setOnClickListener { findNavController().navigate(MainFragmentDirections.actionMainFragmentToGameFragment()) }
+        binding.buttonPlay.setOnClickListener { findNavController().navigate(MainFragmentDirections.actionMainFragmentToGameFragment(2)) }
 
         return binding.root
     }

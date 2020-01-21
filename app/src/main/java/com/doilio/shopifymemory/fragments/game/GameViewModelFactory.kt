@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModelProvider
 import java.lang.IllegalArgumentException
 
 @Suppress("UNCHECKED_CAST")
-class GameViewModelFactory : ViewModelProvider.Factory {
+class GameViewModelFactory(private val pairs: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GameViewModel::class.java)){
-            return GameViewModel() as T
+            return GameViewModel(pairs) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

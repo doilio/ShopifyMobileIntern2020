@@ -28,7 +28,7 @@ class GameFragment : Fragment() {
     private lateinit var viewModel: GameViewModel
     private lateinit var viewModelFactory: GameViewModelFactory
     private val gameTag = GameFragment::class.java.simpleName
-    private var totalRightMoves = 0
+    //private var totalRightMoves = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +39,8 @@ class GameFragment : Fragment() {
         setHasOptionsMenu(true)
         binding.lifecycleOwner = this
 
-        viewModelFactory = GameViewModelFactory()
+        val args = GameFragmentArgs.fromBundle(arguments!!)
+        viewModelFactory = GameViewModelFactory(args.pairs)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.viewModel = viewModel
 
@@ -56,9 +57,9 @@ class GameFragment : Fragment() {
             var clicked = 0
             var firstClicked = -1L
             var secondClicked = -1L
-            var rightMoves = 0
-            var wrongMoves = 0
-            totalRightMoves = products.size / 2
+            // var rightMoves = 0
+            // var wrongMoves = 0
+            //totalRightMoves = products.size / args.pairs
 
             binding.gridView.setOnItemClickListener { _, view, position, _ ->
 
@@ -88,12 +89,12 @@ class GameFragment : Fragment() {
                             // Comparar os itens
                             if (firstClicked == secondClicked) {
                                 Log.d(gameTag, "Same Items!")
-                                rightMoves++
+                                viewModel.incrementRightMoves()
                                 product.cardFace = true
                                 clicked = 0
 
                             } else {
-                                wrongMoves++
+                                viewModel.incrementWrongMoves()
                                 Log.d(gameTag, "Different Items!")
                             }
 
@@ -113,18 +114,42 @@ class GameFragment : Fragment() {
                     gridItemText.text = getString(R.string.back)
                 }
 
-                update(rightMoves, wrongMoves)
+                //update(rightMoves, wrongMoves)
+                Log.d(
+                    gameTag,
+                    "Right Moves: ${viewModel.rightMoves.value}\nWrong Moves: ${viewModel.wrongMoves.value}\n"
+                )
             }
+        })
+
+        viewModel.rightMoves.observe(this, Observer {rightMoves ->
+            val wrongMoves = viewModel.wrongMoves.value!!
+            val totalRightMoves = viewModel.totalRightMoves.value!!
+            (activity as AppCompatActivity).supportActionBar?.title =
+                getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
+            if(rightMoves == totalRightMoves){
+                findNavController().navigate(
+                    GameFragmentDirections.actionGameFragmentToWinnerFragment(
+                        rightMoves,
+                        wrongMoves
+                    )
+                )
+            }
+            Log.d("ViewModel", "valor no fragment: $totalRightMoves")
 
         })
+//        viewModel.gameOptions.observe(this, Observer {
+//            Log.d("ViewModel", "valor no fragment: $it")
+//        })
 
         return binding.root
     }
 
-    private fun update(rightMoves: Int, wrongMoves: Int) {
+/*    private fun update(rightMoves: Int, wrongMoves: Int) {
         Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
         (activity as AppCompatActivity).supportActionBar?.title =
             getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
+
         if (rightMoves == totalRightMoves) {
             findNavController().navigate(
                 GameFragmentDirections.actionGameFragmentToWinnerFragment(
@@ -134,7 +159,7 @@ class GameFragment : Fragment() {
             )
 
         }
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
@@ -145,8 +170,10 @@ class GameFragment : Fragment() {
 
         when (item.itemId) {
             R.id.match_two -> {
-                Toast.makeText(activity, "2", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(activity, "2", Toast.LENGTH_SHORT).show()
                 viewModel.gameOptions.postValue(2)
+                //viewModel.test = viewModel.test + 1
+                //Log.d("ViewModel", "valor no fragment: ${viewModel.test}")
             }
             R.id.match_three -> {
                 Toast.makeText(activity, "3", Toast.LENGTH_SHORT).show()
