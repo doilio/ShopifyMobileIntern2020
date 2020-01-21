@@ -2,7 +2,6 @@ package com.doilio.shopifymemory.fragments.game
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
@@ -18,6 +17,7 @@ import com.doilio.shopifymemory.adapters.GridViewAdapter
 
 import com.doilio.shopifymemory.R
 import com.doilio.shopifymemory.databinding.FragmentGameBinding
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -27,8 +27,6 @@ class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
     private lateinit var viewModel: GameViewModel
     private lateinit var viewModelFactory: GameViewModelFactory
-    private val gameTag = GameFragment::class.java.simpleName
-    //private var totalRightMoves = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,9 +55,6 @@ class GameFragment : Fragment() {
             var clicked = 0
             var firstClicked = -1L
             var secondClicked = -1L
-            // var rightMoves = 0
-            // var wrongMoves = 0
-            //totalRightMoves = products.size / args.pairs
 
             binding.gridView.setOnItemClickListener { _, view, position, _ ->
 
@@ -80,22 +75,19 @@ class GameFragment : Fragment() {
                         }
                         Glide.with(view.context).load(productImage).into(gridItem)
                         clicked++
-                        Log.d(
-                            gameTag,
-                            "Clicked ${gridItemText.text}, Count $clicked  at position $position"
-                        )
+                        Timber.d("Clicked ${gridItemText.text}, Count $clicked  at position $position")
                         gridItemText.text = product.id.toString()
                         if (clicked == 2) {
                             // Comparar os itens
                             if (firstClicked == secondClicked) {
-                                Log.d(gameTag, "Same Items!")
+                                Timber.d("Same Items!")
                                 viewModel.incrementRightMoves()
                                 product.cardFace = true
                                 clicked = 0
 
                             } else {
                                 viewModel.incrementWrongMoves()
-                                Log.d(gameTag, "Different Items!")
+                                Timber.d("Different Items!")
                             }
 
                         }
@@ -107,27 +99,20 @@ class GameFragment : Fragment() {
                 } else {
                     Glide.with(view.context).load(R.drawable.slab_back).into(gridItem)
                     clicked--
-                    Log.d(
-                        gameTag,
-                        "Clicked ${gridItemText.text}, Count $clicked  at position $position"
-                    )
+                    Timber.d("Clicked ${gridItemText.text}, Count $clicked  at position $position")
                     gridItemText.text = getString(R.string.back)
                 }
 
-                //update(rightMoves, wrongMoves)
-                Log.d(
-                    gameTag,
-                    "Right Moves: ${viewModel.rightMoves.value}\nWrong Moves: ${viewModel.wrongMoves.value}\n"
-                )
+                Timber.d("Right Moves: ${viewModel.rightMoves.value}\nWrong Moves: ${viewModel.wrongMoves.value}\n")
             }
         })
 
-        viewModel.rightMoves.observe(this, Observer {rightMoves ->
+        viewModel.rightMoves.observe(this, Observer { rightMoves ->
             val wrongMoves = viewModel.wrongMoves.value!!
             val totalRightMoves = viewModel.totalRightMoves.value!!
             (activity as AppCompatActivity).supportActionBar?.title =
                 getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
-            if(rightMoves == totalRightMoves){
+            if (rightMoves == totalRightMoves) {
                 findNavController().navigate(
                     GameFragmentDirections.actionGameFragmentToWinnerFragment(
                         rightMoves,
@@ -136,58 +121,11 @@ class GameFragment : Fragment() {
                     )
                 )
             }
-            Log.d("ViewModel", "valor no fragment: $totalRightMoves")
+            Timber.d( "valor no fragment: $totalRightMoves")
 
         })
-//        viewModel.gameOptions.observe(this, Observer {
-//            Log.d("ViewModel", "valor no fragment: $it")
-//        })
 
         return binding.root
     }
-
-/*    private fun update(rightMoves: Int, wrongMoves: Int) {
-        Log.d(gameTag, "Right Moves: $rightMoves\nWrong Moves: $wrongMoves\n")
-        (activity as AppCompatActivity).supportActionBar?.title =
-            getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
-
-        if (rightMoves == totalRightMoves) {
-            findNavController().navigate(
-                GameFragmentDirections.actionGameFragmentToWinnerFragment(
-                    rightMoves,
-                    wrongMoves
-                )
-            )
-
-        }
-    }*/
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.game_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.match_two -> {
-                //Toast.makeText(activity, "2", Toast.LENGTH_SHORT).show()
-                viewModel.gameOptions.postValue(2)
-                //viewModel.test = viewModel.test + 1
-                //Log.d("ViewModel", "valor no fragment: ${viewModel.test}")
-            }
-            R.id.match_three -> {
-                Toast.makeText(activity, "3", Toast.LENGTH_SHORT).show()
-                viewModel.gameOptions.postValue(3)
-            }
-            R.id.match_four -> {
-                Toast.makeText(activity, "4", Toast.LENGTH_SHORT).show()
-                viewModel.gameOptions.postValue(4)
-            }
-            else -> Log.d(gameTag, "Invalid Option")
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
 
 }

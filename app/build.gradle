@@ -61,4 +61,7 @@ dependencies {
 
     // About Page
     implementation 'com.github.medyo:android-about-page:1.2.5'
+
+    // Timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

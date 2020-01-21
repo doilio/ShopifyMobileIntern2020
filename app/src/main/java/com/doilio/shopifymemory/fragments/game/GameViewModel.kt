@@ -1,6 +1,5 @@
 package com.doilio.shopifymemory.fragments.game
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import com.doilio.shopifymemory.network.ShopifyApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 
 enum class ShopifyApiStatus { LOADING, ERROR, DONE }
@@ -29,9 +29,6 @@ class GameViewModel(val pairs: Int) : ViewModel() {
     val status: LiveData<ShopifyApiStatus>
         get() = _status
 
-    var gameOptions = MutableLiveData<Int>()
-
-
     private val _rightMoves = MutableLiveData<Int>()
     val rightMoves: LiveData<Int>
         get() = _rightMoves
@@ -47,7 +44,7 @@ class GameViewModel(val pairs: Int) : ViewModel() {
         _rightMoves.value = 0
         _wrongMoves.value = 0
         _totalRightMoves.value = initializeTotalRightMoves()
-        Log.d("ViewModel", "Valor passado: $pairs")
+        Timber.d("Valor passado: $pairs")
         _status.value = ShopifyApiStatus.LOADING
         getProducts()
     }
