@@ -148,7 +148,74 @@ class GameFragment : Fragment() {
     }
 
     private fun gameLogicForModeThree() {
-        showMessage("To be Implemented")
+        viewModel.products.observe(this, Observer { products ->
+
+            val adapter = GridViewAdapter(
+                activity!!.applicationContext,
+                products
+            )
+            binding.gridView.adapter = adapter
+
+            var clicked = 0
+            var firstClicked = -1L
+            var secondClicked = -1L
+            var thirdClicked = -1L
+
+            binding.gridView.setOnItemClickListener { _, view, position, _ ->
+
+                val product = products[position]
+                val productImage = product.image.src
+                val gridItemText = view.findViewById<TextView>(R.id.card_text)
+                val gridItem = view.findViewById<ImageView>(R.id.product_image)
+
+                // Logica para o jogo Mode 3
+                if (gridItemText.text == "back") {
+                    if (clicked < 3) {
+
+                        when (clicked) {
+                            0 -> {
+                                firstClicked = product.id
+                            }
+                            1 -> {
+                                secondClicked = product.id
+                            }
+                            else -> {
+                                thirdClicked = product.id
+                            }
+                        }
+
+                        Glide.with(view.context).load(productImage).into(gridItem)
+                        clicked++
+                        Timber.d("Clicked ${gridItemText.text}, Count $clicked  at position $position")
+                        gridItemText.text = product.id.toString()
+                        if (clicked == 3) {
+                            // Comparar os 3 itens
+                            if (firstClicked == secondClicked && secondClicked == thirdClicked) {
+                                Timber.d("Same Items!")
+                                viewModel.incrementRightMoves()
+                                product.cardFace = true
+                                clicked = 0
+
+                            } else {
+                                viewModel.incrementWrongMoves()
+                                Timber.d("Different Items!")
+                            }
+
+                        }
+
+                    } else {
+                        showMessage("You can only open 3 cards!")
+                    }
+                } else {
+                    Glide.with(view.context).load(R.drawable.slab_back).into(gridItem)
+                    clicked--
+                    Timber.d("Clicked ${gridItemText.text}, Count $clicked  at position $position")
+                    gridItemText.text = getString(R.string.back)
+                }
+
+                Timber.d("Right Moves: ${viewModel.rightMoves.value}\nWrong Moves: ${viewModel.wrongMoves.value}\n")
+            }
+        })
     }
 
     private fun gameLogicForModeTwo() {
