@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.doilio.shopifymemory.adapters.GridViewAdapter
-
 import com.doilio.shopifymemory.R
 import com.doilio.shopifymemory.databinding.FragmentGameBinding
 import timber.log.Timber
@@ -27,6 +26,7 @@ class GameFragment : Fragment() {
     private lateinit var binding: FragmentGameBinding
     private lateinit var viewModel: GameViewModel
     private lateinit var viewModelFactory: GameViewModelFactory
+    private lateinit var args: GameFragmentArgs
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +37,27 @@ class GameFragment : Fragment() {
         setHasOptionsMenu(true)
         binding.lifecycleOwner = this
 
-        val args = GameFragmentArgs.fromBundle(arguments!!)
+        args = GameFragmentArgs.fromBundle(arguments!!)
         viewModelFactory = GameViewModelFactory(args.pairs)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(GameViewModel::class.java)
         binding.viewModel = viewModel
 
         //  Lista de produtos
-        viewModel.products.observe(this, Observer { products ->
-
+        when (args.pairs) {
+            2 -> {
+                showMessage("Game Mode: Match ${args.pairs}")
+                gameLogicForModeTwo()
+            }
+            3 -> {
+                showMessage("Game Mode: Match ${args.pairs}")
+                gameLogicForModeThree()
+            }
+            4 -> {
+                showMessage("Game Mode: Match ${args.pairs}")
+                gameLogicForModeFour()
+            }
+        }
+        /*viewModel.products.observe(this, Observer { products ->
 
             val adapter = GridViewAdapter(
                 activity!!.applicationContext,
@@ -64,7 +77,10 @@ class GameFragment : Fragment() {
                 val gridItem = view.findViewById<ImageView>(R.id.product_image)
 
 
-                // Logica para o jogo
+                // Logica para o jogo Mode 2
+               // handleGameLogic(product, productImage, gridItemText, gridItem)
+
+
                 if (gridItemText.text == "back") {
                     if (clicked < 2) {
 
@@ -93,8 +109,99 @@ class GameFragment : Fragment() {
                         }
 
                     } else {
-                        Toast.makeText(activity, "You can only open 2 cards!", Toast.LENGTH_SHORT)
-                            .show()
+                        showMessage("You can only open 2 cards!")
+                    }
+                } else {
+                    Glide.with(view.context).load(R.drawable.slab_back).into(gridItem)
+                    clicked--
+                    Timber.d("Clicked ${gridItemText.text}, Count $clicked  at position $position")
+                    gridItemText.text = getString(R.string.back)
+                }
+
+                Timber.d("Right Moves: ${viewModel.rightMoves.value}\nWrong Moves: ${viewModel.wrongMoves.value}\n")
+            }
+        })*/
+
+        viewModel.rightMoves.observe(this, Observer { rightMoves ->
+            val wrongMoves = viewModel.wrongMoves.value!!
+            val totalRightMoves = viewModel.totalRightMoves.value!!
+
+            (activity as AppCompatActivity).supportActionBar?.title =
+                getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
+
+            if (rightMoves == totalRightMoves) {
+                findNavController().navigate(
+                    GameFragmentDirections.actionGameFragmentToWinnerFragment(
+                        rightMoves,
+                        wrongMoves,
+                        args.pairs
+                    )
+                )
+            }
+        })
+
+        return binding.root
+    }
+
+    private fun gameLogicForModeFour() {
+        showMessage("To be Implemented")
+    }
+
+    private fun gameLogicForModeThree() {
+        showMessage("To be Implemented")
+    }
+
+    private fun gameLogicForModeTwo() {
+        viewModel.products.observe(this, Observer { products ->
+
+            val adapter = GridViewAdapter(
+                activity!!.applicationContext,
+                products
+            )
+            binding.gridView.adapter = adapter
+
+            var clicked = 0
+            var firstClicked = -1L
+            var secondClicked = -1L
+
+            binding.gridView.setOnItemClickListener { _, view, position, _ ->
+
+                val product = products[position]
+                val productImage = product.image.src
+                val gridItemText = view.findViewById<TextView>(R.id.card_text)
+                val gridItem = view.findViewById<ImageView>(R.id.product_image)
+
+
+                // Logica para o jogo Mode 2
+                if (gridItemText.text == "back") {
+                    if (clicked < 2) {
+
+                        if (clicked == 0) {
+                            firstClicked = product.id
+                        } else {
+                            secondClicked = product.id
+                        }
+                        Glide.with(view.context).load(productImage).into(gridItem)
+                        clicked++
+                        Timber.d("Clicked ${gridItemText.text}, Count $clicked  at position $position")
+                        gridItemText.text = product.id.toString()
+                        if (clicked == 2) {
+                            // Comparar os itens
+                            if (firstClicked == secondClicked) {
+                                Timber.d("Same Items!")
+                                viewModel.incrementRightMoves()
+                                product.cardFace = true
+                                clicked = 0
+
+                            } else {
+                                viewModel.incrementWrongMoves()
+                                Timber.d("Different Items!")
+                            }
+
+                        }
+
+                    } else {
+                        showMessage("You can only open 2 cards!")
                     }
                 } else {
                     Glide.with(view.context).load(R.drawable.slab_back).into(gridItem)
@@ -106,26 +213,10 @@ class GameFragment : Fragment() {
                 Timber.d("Right Moves: ${viewModel.rightMoves.value}\nWrong Moves: ${viewModel.wrongMoves.value}\n")
             }
         })
+    }
 
-        viewModel.rightMoves.observe(this, Observer { rightMoves ->
-            val wrongMoves = viewModel.wrongMoves.value!!
-            val totalRightMoves = viewModel.totalRightMoves.value!!
-            (activity as AppCompatActivity).supportActionBar?.title =
-                getString(R.string.game_fragment_title, rightMoves, totalRightMoves)
-            if (rightMoves == totalRightMoves) {
-                findNavController().navigate(
-                    GameFragmentDirections.actionGameFragmentToWinnerFragment(
-                        rightMoves,
-                        wrongMoves,
-                        args.pairs
-                    )
-                )
-            }
-            Timber.d( "valor no fragment: $totalRightMoves")
-
-        })
-
-        return binding.root
+    private fun showMessage(msg: String) {
+        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
     }
 
 }
