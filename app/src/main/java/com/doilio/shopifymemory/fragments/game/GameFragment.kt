@@ -131,7 +131,8 @@ class GameFragment : Fragment() {
                 findNavController().navigate(
                     GameFragmentDirections.actionGameFragmentToWinnerFragment(
                         rightMoves,
-                        wrongMoves
+                        wrongMoves,
+                        args.pairs
                     )
                 )
             }

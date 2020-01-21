@@ -56,7 +56,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            tools:text="You won the game with XX Pairs Matched\n and only XX Wrong Moves" />
+            tools:text="You won the game with XX Pairs Matched\n and only XX Wrong Moves. \nGame Mode: \nMatch-XX" />
 
         <Button
             android:id="@+id/button"

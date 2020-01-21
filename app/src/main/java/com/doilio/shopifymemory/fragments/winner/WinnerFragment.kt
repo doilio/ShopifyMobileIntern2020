@@ -39,14 +39,18 @@ class WinnerFragment : Fragment() {
         viewModel.navigateToGameFragment.observe(this, Observer {
             it?.let {
                 if (it) {
-                    findNavController().navigate(WinnerFragmentDirections.actionWinnerFragmentToGameFragment(2))
+                    findNavController().navigate(
+                        WinnerFragmentDirections.actionWinnerFragmentToGameFragment(
+                            args.pairsUsed
+                        )
+                    )
                     viewModel.navigateCompleted()
                 }
             }
         })
 
         binding.winnerMessage.text =
-            "You won the game with ${args.pairsMatched} Pairs Matched! \nand only ${args.wrongMoves} Wrong Moves."
+            "You won the game with ${args.pairsMatched} Pairs Matched! \nand only ${args.wrongMoves} Wrong Moves. \nGame Mode: \nMatch-${args.pairsUsed}"
 
 
         return binding.root
@@ -61,7 +65,7 @@ class WinnerFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.share -> {
-                shareVictory("I Just won the Shopify Memory Game with ${args.pairsMatched} pairs matched and only ${args.wrongMoves} wrong moves. Try it out *link*")
+                shareVictory("I Just won the Shopify Memory Game with ${args.pairsMatched} pairs matched and only ${args.wrongMoves} wrong moves. Using Game Mode: Match-${args.pairsUsed} Try it out *link*")
             }
         }
         return super.onOptionsItemSelected(item)

@@ -65,5 +65,8 @@
         <argument
             android:name="WrongMoves"
             app:argType="integer" />
+        <argument
+            android:name="pairsUsed"
+            app:argType="integer" />
     </fragment>
 </navigation>
