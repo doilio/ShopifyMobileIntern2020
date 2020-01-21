@@ -3,28 +3,49 @@ Mobile Developer Intern (Android) - Summer 2020
 
 This is a Simple Memory Game developed for the Shopify Mobile Intern Challenge 2020
 
+## Game Grid Size
+For this game I opted on going with a fixed size grid of **48 products** because of two reasons:
+
+1. I didn't want to sacrifice the first requirement *(The user should have to find a minimum of 10 pairs to win.)*
+2. I wanted to keep a consistent look throughout the different game modes (**Match 2, Match 3 & Match 4**)
+
+### Why Grid size 48?
+
+Since I had to match 2, 3 and 4 of the same products, I had to find a number which is divisible by 2,3 & 4, which is 12.
+
+But 12 didn't help much because the first requirement is to match a minimum of 10.
+So with 12 being the full grid size:
+- In game mode 2 I could only match 6 products.
+- In game mode 3 I could only match 4 products.
+- In game mode 4 I could only match 3 products.
+
+That being said 48 was my magic number where:
+- In game mode 2 I could now match 24 products.
+- In game mode 3 I could now match 16 products.
+- In game mode 4 I could now match 12 products.
+
+48 Products allowed me to show 6 columns with 8 rows. which didn't disrupt my last row by showing a different set of columns in the last row when compared to the upper ones.
 
 ### Application Screens
 
-![device-2020-01-20-160238](https://user-images.githubusercontent.com/38020305/72734119-d35bbe80-3ba1-11ea-85db-913b11f471a9.png)
-![device-2020-01-20-160309](https://user-images.githubusercontent.com/38020305/72734123-d35bbe80-3ba1-11ea-9165-8f7221c330f4.png)
+![device-2020-01-21-212440](https://user-images.githubusercontent.com/38020305/72836327-0632af00-3c95-11ea-815c-b0e38c49887c.png)
+![device-2020-01-21-212551](https://user-images.githubusercontent.com/38020305/72836328-0632af00-3c95-11ea-89ab-caebd45e4885.png)
 ![device-2020-01-20-160404](https://user-images.githubusercontent.com/38020305/72734125-d3f45500-3ba1-11ea-8979-9098a1c21f5c.png)
 ![device-2020-01-20-160530](https://user-images.githubusercontent.com/38020305/72734126-d48ceb80-3ba1-11ea-8917-1e72718c989f.png)
 
 ### Loading and Network Error Screens
 
-![device-2020-01-20-160614](https://user-images.githubusercontent.com/38020305/72734127-d48ceb80-3ba1-11ea-9b49-d7615023ea92.png)
-![device-2020-01-20-160648](https://user-images.githubusercontent.com/38020305/72734130-d5be1880-3ba1-11ea-9585-24bef484f379.png)
+![device-2020-01-21-213124](https://user-images.githubusercontent.com/38020305/72836692-d1732780-3c95-11ea-9e66-df6d966d2f97.png)
+![device-2020-01-21-213203](https://user-images.githubusercontent.com/38020305/72836695-d20bbe00-3c95-11ea-81c0-9fd00bdf3e64.png)
 
 ### Game Screens
 
-![device-2020-01-20-160719](https://user-images.githubusercontent.com/38020305/72734132-d656af00-3ba1-11ea-854d-fae2bd1d8810.png)
-![device-2020-01-20-161250](https://user-images.githubusercontent.com/38020305/72734136-d656af00-3ba1-11ea-8f82-dabfcebd9a8b.png)
-![device-2020-01-20-161511](https://user-images.githubusercontent.com/38020305/72734141-d787dc00-3ba1-11ea-88ca-004f3e70d75f.png)
+![device-2020-01-21-213806](https://user-images.githubusercontent.com/38020305/72837450-2d8a7b80-3c97-11ea-86d2-3af77999e1ab.png)
+![device-2020-01-21-214119](https://user-images.githubusercontent.com/38020305/72837452-2d8a7b80-3c97-11ea-8e2b-63e2988fb334.png)
 
 ### Victory Screen
 
-![device-2020-01-20-161326](https://user-images.githubusercontent.com/38020305/72734138-d6ef4580-3ba1-11ea-9a76-3d446ebab3c4.png)
+![device-2020-01-21-214835](https://user-images.githubusercontent.com/38020305/72837855-dfc24300-3c97-11ea-936d-19bbe2708797.png)
 
 ## Built With
 
