@@ -3,6 +3,8 @@ Mobile Developer Intern (Android) - Summer 2020
 
 This is a Simple Memory Game developed for the Shopify Mobile Intern Challenge 2020
 
+[Shopify Mobile Developer Project- Matching Game.pdf](https://github.com/doilio/ShopifyMobileIntern2020/files/4135962/Shopify.Mobile.Developer.Project-.Matching.Game.pdf)
+
 ## Game Grid Size
 For this game I opted on going with a fixed size grid of **48 products** because of two reasons:
 
